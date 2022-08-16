@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout-w1240dp/activity_main.xml" value="0.12617135207496652" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout-w1240dp/app_bar_main.xml" value="0.24464524765729584" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout-w1240dp/content_main.xml" value="0.12617135207496652" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout-w600dp/activity_main.xml" value="0.1662257495590829" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout-w600dp/app_bar_main.xml" value="0.322310405643739" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout-w600dp/fragment_transform.xml" value="0.18" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout-w600dp/item_transform.xml" value="0.1662257495590829" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/activity_main.xml" value="0.19635416666666666" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/app_bar_main.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/content_main.xml" value="0.32653985507246375" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/fragment_reflow.xml" value="0.32653985507246375" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/fragment_settings.xml" value="0.32653985507246375" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/fragment_slideshow.xml" value="0.32653985507246375" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/fragment_transform.xml" value="0.15" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/item_transform.xml" value="0.19635416666666666" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/menu_cart.xml" value="0.19635416666666666" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/menu_item.xml" value="0.32653985507246375" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/menu/bottom_navigation.xml" value="0.3807291666666667" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/menu/navigation_drawer.xml" value="0.3807291666666667" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/menu/overflow.xml" value="0.3807291666666667" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.204" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.204" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
