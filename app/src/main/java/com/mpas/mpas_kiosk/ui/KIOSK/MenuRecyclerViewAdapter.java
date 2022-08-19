@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
@@ -19,10 +19,10 @@ import java.util.List;
 
 public class MenuRecyclerViewAdapter  extends RecyclerView.Adapter<MenuRecyclerViewAdapter.MenuViewHolder>{
 
-    private final List<MenuItem> db;
+    private final List<CartChild> db;
     private Activity activity;
     private MenuItemViewModel menuItemViewModel;
-    public MenuRecyclerViewAdapter(List<MenuItem> items) {
+    public MenuRecyclerViewAdapter(List<CartChild> items) {
         this.db = items;
     }
 
@@ -42,12 +42,12 @@ public class MenuRecyclerViewAdapter  extends RecyclerView.Adapter<MenuRecyclerV
     @SuppressLint("DefaultLocale")
     @Override
     public void onBindViewHolder(@NonNull MenuViewHolder holder, int position) {
-        MenuItem menuItem = db.get(position);
+        CartChild cartChild = db.get(position);
 
-        int count = menuItem.getCount();
-        int price = menuItem.getPrice();
-        int draw = menuItem.getItemImage();
-        String tag = menuItem.getTag();
+        int count = cartChild.getCount();
+        int price = cartChild.getPrice();
+        int draw = cartChild.getItemImage();
+        String tag = cartChild.getTag();
 
         Log.e("onBindViewHolder", String.format("postion : %d count: %d  price:  %d tag : %s",position,count,price,tag));
 
@@ -57,7 +57,7 @@ public class MenuRecyclerViewAdapter  extends RecyclerView.Adapter<MenuRecyclerV
         holder.add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                menuItemViewModel.addCart(menuItem);
+                menuItemViewModel.addCart(cartChild);
             }
         });
 

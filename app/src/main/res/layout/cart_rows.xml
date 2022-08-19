@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.TableRow
+<android.widget.LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginRight="20dp">
 
     <TextView
         android:id="@+id/cart_item_tag"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_weight="1"
-        android:gravity="center_horizontal|center_vertical"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:gravity="right|center_vertical"
         android:text="TextView" />
 
     <TextView
@@ -17,7 +20,10 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_weight="1"
-        android:gravity="center_horizontal|center_vertical"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:gravity="right|center_vertical"
+        android:layout_marginEnd="20dp"
         android:text="TextView" />
 
     <LinearLayout
@@ -36,6 +42,8 @@
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:gravity="center"
+            android:textStyle="bold"
             android:inputType="number" />
 
         <Button
@@ -44,4 +52,4 @@
             android:layout_height="wrap_content"
             android:text="-" />
     </LinearLayout>
-</android.widget.TableRow>
+</android.widget.LinearLayout>

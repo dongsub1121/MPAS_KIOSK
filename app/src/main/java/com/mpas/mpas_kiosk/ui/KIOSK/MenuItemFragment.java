@@ -1,29 +1,23 @@
 package com.mpas.mpas_kiosk.ui.KIOSK;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mpas.mpas_kiosk.R;
 import com.mpas.mpas_kiosk.databinding.FragmentTransformBinding;
-import com.mpas.mpas_kiosk.databinding.ItemTransformBinding;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,30 +30,64 @@ import java.util.List;
 public class MenuItemFragment extends Fragment {
 
     private FragmentTransformBinding binding;
+    private MenuItemViewModel menuItemViewModel;
 
+    Dialog dialog01;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        MenuItemViewModel menuItemViewModel =
-                new ViewModelProvider(this).get(MenuItemViewModel.class);
+        menuItemViewModel =
+                new ViewModelProvider(requireActivity()).get(MenuItemViewModel.class);
 
         binding = FragmentTransformBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        dialog01 = new Dialog(requireActivity());
+        dialog01.setContentView(R.layout.qr_dialog);
+
         RecyclerView recyclerView = binding.recyclerviewTransform;
         recyclerView.setLayoutManager(new GridLayoutManager(requireActivity(),4));
-        //ListAdapter<String, TransformViewHolder> adapter = new TransformAdapter();
         MenuRecyclerViewAdapter adapter = new MenuRecyclerViewAdapter(setItem());
         recyclerView.setAdapter(adapter);
-        //menuItemViewModel.getTexts().observe(getViewLifecycleOwner(), adapter::submitList);
 
         RecyclerView cart = binding.cartItemRecyclerview;
         cart.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
-        menuItemViewModel.getICart().observe(getViewLifecycleOwner(),itemList ->{
-            CartRecyclerViewAdapter cartRecyclerViewAdapter = new CartRecyclerViewAdapter(itemList);
-            cart.setAdapter(cartRecyclerViewAdapter);
+
+        binding.payment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                menuItemViewModel.newItem();
+            }
         });
+
+        menuItemViewModel.getICart().observe(requireActivity(),items ->{
+            cart.setAdapter(new CartRecyclerViewAdapter(items));
+            Log.e("getChildCount", String.valueOf(cart.getChildCount()));
+            binding.scrollview1.scrollBy(0,200);
+
+            Log.e("observe",items.toString());
+
+        });
+
+        menuItemViewModel.getSum().observe(requireActivity(),price -> {
+            binding.tvSum.setText(String.format("%d 원",price));
+        });
+
+        menuItemViewModel.getQrData().observe(requireActivity(),qr ->{
+
+            LayoutInflater layoutInflater = dialog01.getLayoutInflater();
+            View view = layoutInflater.inflate(R.layout.qr_dialog,null);
+            ImageView imageView1 = view.findViewById(R.id.image_qr);
+            imageView1.setImageBitmap(qr);
+
+            dialog01.setContentView(view);
+            dialog01.show();
+
+
+
+        });
+
         return root;
     }
 
@@ -69,82 +97,19 @@ public class MenuItemFragment extends Fragment {
         binding = null;
     }
 
-    private List<MenuItem> setItem() {
+    private List<CartChild> setItem() {
 
-        List<MenuItem> items = new LinkedList<>();
+        List<CartChild> items = new LinkedList<>();
 
-        items.add( new MenuItem(R.drawable.menu1,"나이트로 바닐라 크림",6500));
-        items.add( new MenuItem(R.drawable.menu_2,"콜드 브루 플로트",6000));
-        items.add( new MenuItem(R.drawable.menu_3,"돌체 콜드브루",5300));
-        items.add( new MenuItem(R.drawable.menu_4,"바닐라 크림 콜드브루",5000));
-        items.add( new MenuItem(R.drawable.menu_5,"부드러운 생크림 카스텔라",9000));
-        items.add( new MenuItem(R.drawable.menu_6,"베리 수플레 치즈 케이크",13000));
-        items.add( new MenuItem(R.drawable.menu_7,"리치 가나슈 케이크",15000));
-        items.add( new MenuItem(R.drawable.menu_8,"초콜릿 생크림 케이크",13000));
+        items.add( new CartChild(R.drawable.menu1,"나이트로 바닐라 크림",6500));
+        items.add( new CartChild(R.drawable.menu_2,"콜드 브루 플로트",6000));
+        items.add( new CartChild(R.drawable.menu_3,"돌체 콜드브루",5300));
+        items.add( new CartChild(R.drawable.menu_4,"바닐라 크림 콜드브루",5000));
+        items.add( new CartChild(R.drawable.menu_5,"부드러운 생크림 카스텔라",9000));
+        items.add( new CartChild(R.drawable.menu_6,"베리 수플레 치즈 케이크",13000));
+        items.add( new CartChild(R.drawable.menu_7,"리치 가나슈 케이크",15000));
+        items.add( new CartChild(R.drawable.menu_8,"초콜릿 생크림 케이크",13000));
 
         return items;
-    }
-
-    private static class TransformAdapter extends ListAdapter<String, TransformViewHolder> {
-
-        private final List<Integer> drawables = Arrays.asList(
-                R.drawable.avatar_1,
-                R.drawable.avatar_2,
-                R.drawable.avatar_3,
-                R.drawable.avatar_4,
-                R.drawable.avatar_5,
-                R.drawable.avatar_6,
-                R.drawable.avatar_7,
-                R.drawable.avatar_8,
-                R.drawable.avatar_9,
-                R.drawable.avatar_10,
-                R.drawable.avatar_11,
-                R.drawable.avatar_12,
-                R.drawable.avatar_13,
-                R.drawable.avatar_14,
-                R.drawable.avatar_15,
-                R.drawable.avatar_16);
-
-        protected TransformAdapter() {
-            super(new DiffUtil.ItemCallback<String>() {
-                @Override
-                public boolean areItemsTheSame(@NonNull String oldItem, @NonNull String newItem) {
-                    return oldItem.equals(newItem);
-                }
-
-                @Override
-                public boolean areContentsTheSame(@NonNull String oldItem, @NonNull String newItem) {
-                    return oldItem.equals(newItem);
-                }
-            });
-        }
-
-        @NonNull
-        @Override
-        public TransformViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            ItemTransformBinding binding = ItemTransformBinding.inflate(LayoutInflater.from(parent.getContext()));
-            return new TransformViewHolder(binding);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull TransformViewHolder holder, int position) {
-            holder.textView.setText(getItem(position));
-            holder.imageView.setImageDrawable(
-                    ResourcesCompat.getDrawable(holder.imageView.getResources(),
-                            drawables.get(position),
-                            null));
-        }
-    }
-
-    private static class TransformViewHolder extends RecyclerView.ViewHolder {
-
-        private final ImageView imageView;
-        private final TextView textView;
-
-        public TransformViewHolder(ItemTransformBinding binding) {
-            super(binding.getRoot());
-            imageView = binding.imageViewItemTransform;
-            textView = binding.textViewItemTransform;
-        }
     }
 }

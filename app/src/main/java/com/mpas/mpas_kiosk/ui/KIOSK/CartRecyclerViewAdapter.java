@@ -21,12 +21,13 @@ import java.util.List;
 
 public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerViewAdapter.CartViewHolder>{
 
-    private final List<MenuItem> db;
+    private List<CartChild> db;
     private Activity activity;
-    private MenuItemViewModel menuItemViewModel;
-    public CartRecyclerViewAdapter(List<MenuItem> items) {
-        this.db = items;
+    private static MenuItemViewModel menuItemViewModel;
+    public CartRecyclerViewAdapter(List<CartChild> items) {
         Log.e("CartRecyclerViewAdapter","CartRecyclerViewAdapter");
+        this.db = items;
+
     }
 
     @NonNull
@@ -44,29 +45,38 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
 
     @SuppressLint("DefaultLocale")
     @Override
-    public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
-        MenuItem menuItem = db.get(position);
+    public void onBindViewHolder(@NonNull CartViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        CartChild cartChild = db.get(position);
 
-        int count = menuItem.getCount();
-        int price = menuItem.getPrice();
-        String tag = menuItem.getTag();
+        int count = cartChild.getCount();
+        int price = cartChild.getPrice();
+        String tag = cartChild.getTag();
 
         Log.e("CartRecyclerViewAdapter", String.format("postion : %d count: %d  price:  %d tag : %s",position,count,price,tag));
 
         holder.tag.setText(tag);
         holder.price.setText(String.format("%d 원",price));
-        holder.quantity.setText(menuItem.getCount());
+        holder.quantity.setText(String.valueOf(cartChild.getCount()));
+
         holder.plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                menuItem.setCount(count+1);
+                cartChild.setCount(cartChild.getCount()+1);
+                Log.e("item.count", String.valueOf(cartChild.getCount()));
+                menuItemViewModel.updateCart(position, cartChild);
             }
         });
 
         holder.minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                menuItem.setCount(count-1);
+                cartChild.setCount(cartChild.getCount()-1);
+                Log.e("item.count", String.valueOf(cartChild.getCount()));
+                menuItemViewModel.updateCart(position, cartChild);
+
+                if(cartChild.getCount() < 1) {
+                    menuItemViewModel.removeCartItem(position, cartChild);
+                }
             }
         });
 
@@ -76,6 +86,10 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
     @Override
     public int getItemCount() {
         return db.size();
+    }
+
+    public void setCart(List<CartChild> itemList) {
+        this.db = itemList;
     }
 
     public class CartViewHolder extends RecyclerView.ViewHolder {

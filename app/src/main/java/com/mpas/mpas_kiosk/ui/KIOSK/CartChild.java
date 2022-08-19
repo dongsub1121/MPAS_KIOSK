@@ -2,14 +2,14 @@ package com.mpas.mpas_kiosk.ui.KIOSK;
 
 import android.graphics.drawable.Drawable;
 
-public class MenuItem {
+public class CartChild {
 
     Integer itemImage;
     String tag;
     Integer count = 0;
     Integer price = 0;
 
-    public MenuItem(int drawable, String tag, Integer price) {
+    public CartChild(int drawable, String tag, Integer price) {
        this.itemImage = drawable;
        this.tag = tag;
        this.price = price;

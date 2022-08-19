@@ -32,6 +32,31 @@ android {
 
 dependencies {
 
+    def lifecycleExtentionVersion = '1.1.1'
+    def retrofitVersion = '2.3.0'
+    def rxJavaVersion ='2.1.1'
+    def room_version = "2.4.2"
+
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.preference:preference:1.1.1'
+    //RxJava
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.7'
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxJavaVersion"
+
+    //zxing
+    implementation 'com.google.zxing:core:3.3.2'
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+
+    //ViewModel and LiveData
+    implementation "android.arch.lifecycle:extensions:$lifecycleExtentionVersion"
+
+    //Retrofit
+    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
