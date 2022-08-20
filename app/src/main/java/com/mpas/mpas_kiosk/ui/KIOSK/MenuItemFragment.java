@@ -7,12 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mpas.mpas_kiosk.R;
@@ -21,12 +20,6 @@ import com.mpas.mpas_kiosk.databinding.FragmentTransformBinding;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Fragment that demonstrates a responsive layout pattern where the format of the content
- * transforms depending on the size of the screen. Specifically this Fragment shows items in
- * the [RecyclerView] using LinearLayoutManager in a small screen
- * and shows items using GridLayoutManager in a large screen.
- */
 public class MenuItemFragment extends Fragment {
 
     private FragmentTransformBinding binding;
@@ -46,12 +39,10 @@ public class MenuItemFragment extends Fragment {
         dialog01.setContentView(R.layout.qr_dialog);
 
         RecyclerView recyclerView = binding.recyclerviewTransform;
-        recyclerView.setLayoutManager(new GridLayoutManager(requireActivity(),4));
         MenuRecyclerViewAdapter adapter = new MenuRecyclerViewAdapter(setItem());
         recyclerView.setAdapter(adapter);
 
         RecyclerView cart = binding.cartItemRecyclerview;
-        cart.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
 
         binding.payment.setOnClickListener(new View.OnClickListener() {
@@ -62,11 +53,12 @@ public class MenuItemFragment extends Fragment {
         });
 
         menuItemViewModel.getICart().observe(requireActivity(),items ->{
-            cart.setAdapter(new CartRecyclerViewAdapter(items));
-            Log.e("getChildCount", String.valueOf(cart.getChildCount()));
-            binding.scrollview1.scrollBy(0,200);
+            CartRecyclerViewAdapter cartRecyclerViewAdapter = (new CartRecyclerViewAdapter(items));
+            //cart.setAdapter(new CartRecyclerViewAdapter(items));
+            cart.setAdapter(cartRecyclerViewAdapter);
 
-            Log.e("observe",items.toString());
+            Log.e("getChildCount", String.valueOf(cartRecyclerViewAdapter.getItemCount()));
+            binding.cartItemRecyclerview.scrollToPosition(cartRecyclerViewAdapter.getItemCount()-1);
 
         });
 
@@ -83,8 +75,23 @@ public class MenuItemFragment extends Fragment {
 
             dialog01.setContentView(view);
             dialog01.show();
+        });
 
+        menuItemViewModel.getUid().observe(requireActivity(),re -> {
+            menuItemViewModel.getInfo();
+        });
 
+        menuItemViewModel.getResult().observe(requireActivity(),r->{
+            Log.e("getresult","ok");
+            LayoutInflater layoutInflater = dialog01.getLayoutInflater();
+            View view = layoutInflater.inflate(R.layout.qr_dialog,null);
+            ImageView imageView1 = view.findViewById(R.id.image_qr);
+            imageView1.setImageBitmap(null);
+            imageView1.setVisibility(View.INVISIBLE);
+            TextView textView = view.findViewById(R.id.guide);
+            textView.setText("결제가 완료 되었습니다.\n이용해 주셔서 감사합니다.");
+            dialog01.setContentView(view);
+            dialog01.show();
 
         });
 

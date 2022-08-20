@@ -77,7 +77,7 @@ public class Cart {
         return title;
     }
 
-    public void setEditTitle(String editTitle) {
+    public void setEditTitle(RetroItem editTitle) {
         this.title += title+ editTitle;
     }
 }

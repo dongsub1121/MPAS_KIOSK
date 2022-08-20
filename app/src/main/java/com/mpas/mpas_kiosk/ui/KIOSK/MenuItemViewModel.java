@@ -1,5 +1,6 @@
 package com.mpas.mpas_kiosk.ui.KIOSK;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -18,9 +19,14 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Function;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -40,6 +46,15 @@ public class MenuItemViewModel extends AndroidViewModel {
     public MutableLiveData<List<CartChild>> cartList = new MutableLiveData<>();
     public MutableLiveData<Integer> sum = new MutableLiveData<>();
     public MutableLiveData<Bitmap> qrData = new MutableLiveData<>();
+    public MutableLiveData<Boolean> result = new MutableLiveData<>();
+    public MutableLiveData<String> uid = new MutableLiveData<>();
+    public MutableLiveData<String> paymentsDone = new MutableLiveData<>();
+
+    public MutableLiveData<String> getPaymentsDone() {return paymentsDone;}
+
+    public MutableLiveData<String> getUid() {return uid;}
+
+    public MutableLiveData<Boolean> getResult() {return result;}
 
     public MutableLiveData<Bitmap> getQrData() {
         return qrData;
@@ -52,6 +67,8 @@ public class MenuItemViewModel extends AndroidViewModel {
     public MutableLiveData<Integer> getSum() {
         return sum;
     }
+
+
 
 
     public void initCartItem() { cart = new Cart(); cartItems = new ArrayList<>();}
@@ -79,10 +96,10 @@ public class MenuItemViewModel extends AndroidViewModel {
     }
 
     public void setCartItem (int index, CartChild cartChild) {
-        Log.e("cartItems", String.valueOf(cartItems.get(index)));
+        Log.e("cartItems", java.lang.String.valueOf(cartItems.get(index)));
         cartItems.set(index, cartChild);
         Log.e("cartItems", cartChild.getTag());
-        Log.e("cartItems", String.valueOf(cartItems.get(index)));
+        Log.e("cartItems", java.lang.String.valueOf(cartItems.get(index)));
 
     }
 
@@ -98,15 +115,15 @@ public class MenuItemViewModel extends AndroidViewModel {
         cd.add(repo.singleNew(cart)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<Object>() {
+                .subscribeWith(new DisposableSingleObserver<java.lang.Object>() {
                     @Override
-                    public void onSuccess(Object o) {
+                    public void onSuccess(java.lang.Object o) {
                         Gson gson = new GsonBuilder()
                                 .setLenient()
                                 .create();
 
-                        String s = new Gson().toJson(o);
-                        String js = s.substring(1, s.length() - 1);
+                        java.lang.String s = new Gson().toJson(o);
+                        java.lang.String js = s.substring(1, s.length() - 1);
 
                         RetroItem item = gson.fromJson(js, RetroItem.class);
                         Log.e("onSuccess", item.cbf);
@@ -123,7 +140,9 @@ public class MenuItemViewModel extends AndroidViewModel {
                         }
 
                         qrData.postValue(qrBitmap);
-                        repo.setUid(item.cbf);
+                        uid.setValue(item.uid);
+                        Log.e("uid",getUid().toString());
+                        repo.setUid(item.uid);
                     }
 
                     @Override
@@ -131,5 +150,54 @@ public class MenuItemViewModel extends AndroidViewModel {
                         e.printStackTrace();
                     }
                 }));
+    }
+
+    @SuppressLint("CheckResult")
+    public void getInfo() {
+
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+        Observable<RetroItem> itemObservable = repo.retroItemObservable(getUid().getValue())
+                .delay(1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(new Function<Object, ObservableSource<? extends RetroItem>>() {
+                    @Override
+                    public Observable<RetroItem> apply(Object o) throws Exception {
+                        String s = gson.toJson(o);
+                        Log.e("apply", s );
+                        String js = s.substring(1, s.length() - 1);
+                        RetroItem item = gson.fromJson(js, RetroItem.class);
+                        Log.e("Observable_hit", item.hit);
+                        return Observable.just(item);
+                    }
+                })
+                .filter(retroItem -> retroItem.hit.equals("20.0"))
+                .repeat(30);
+
+        itemObservable.subscribeWith(new DisposableObserver<RetroItem>() {
+            @Override
+            public void onNext(RetroItem retroItem) {
+                String s = retroItem.pack;
+                String js = s.substring(1, s.length() - 1);
+                Log.e("retroItem.pack", s );
+                PackModel pack = gson.fromJson(js, PackModel.class);
+
+                Log.e("subscribe", String.valueOf(pack.getClientData().getIssuerName()));
+
+                result.postValue(true);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        });
     }
 }

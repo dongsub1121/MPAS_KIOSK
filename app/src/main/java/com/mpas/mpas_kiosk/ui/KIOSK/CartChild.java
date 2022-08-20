@@ -1,7 +1,5 @@
 package com.mpas.mpas_kiosk.ui.KIOSK;
 
-import android.graphics.drawable.Drawable;
-
 public class CartChild {
 
     Integer itemImage;

@@ -7,74 +7,78 @@ public class RetroItem {
 
     @SerializedName("_uid")
     @Expose
-    String _uid;
+    java.lang.String _uid;
 
     @SerializedName("uid")
     @Expose
-    String uid;
+    java.lang.String uid;
 
     @SerializedName("_nid")
     @Expose
-    String _nid;
+    java.lang.String _nid;
 
     @SerializedName("cid")
     @Expose
-    String cid;
+    java.lang.String cid;
 
     @SerializedName("pnm")
     @Expose
-    String pnm;
+    java.lang.String pnm;
 
     @SerializedName("ptz")
     @Expose
-    String ptz;
+    java.lang.String ptz;
 
     @SerializedName("ptw")
     @Expose
-    String ptw;
+    java.lang.String ptw;
 
     @SerializedName("ptx")
     @Expose
-    String ptx;
+    java.lang.String ptx;
 
     @SerializedName("ptr")
     @Expose
-    String ptr;
+    java.lang.String ptr;
 
     @SerializedName("pty")
     @Expose
-    String pty;
+    java.lang.String pty;
 
     @SerializedName("pta")
     @Expose
-    String pta;
+    java.lang.String pta;
 
     @SerializedName("prev")
     @Expose
-    String prev;
+    java.lang.String prev;
 
     @SerializedName("cbf")
     @Expose
-    String cbf;
+    java.lang.String cbf;
 
     @SerializedName("tkn")
     @Expose
-    String tkn;
+    java.lang.String tkn;
 
     @SerializedName("type")
     @Expose
-    String type;
+    java.lang.String type;
 
     @SerializedName("hit")
     @Expose
-    String hit;
+    java.lang.String hit;
 
     @SerializedName("rec")
     @Expose
-    String rec;
+    java.lang.String rec;
 
     @SerializedName("rem")
     @Expose
-    String rem;
+    java.lang.String rem;
+
+    @SerializedName("pack")
+    @Expose
+    String pack;
 
 }
