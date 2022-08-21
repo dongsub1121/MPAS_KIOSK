@@ -26,7 +26,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:textStyle="bold"
         android:textSize="17sp"
-        android:text="1. 결제 할 간편결제 App을 실행해 주세요\n\n2. QR결제를 선택하고 아래 QR을 읽어 주세요" />
+        android:text="" />
 
     <ImageView
         android:id="@+id/image_qr"
@@ -38,4 +38,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tv_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/image_qr"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        android:text="" />
 </androidx.constraintlayout.widget.ConstraintLayout>

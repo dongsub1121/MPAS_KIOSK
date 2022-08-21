@@ -24,8 +24,8 @@ public class MenuItemFragment extends Fragment {
 
     private FragmentTransformBinding binding;
     private MenuItemViewModel menuItemViewModel;
-
-    Dialog dialog01;
+    private LayoutInflater dLayoutInflater;
+    private Dialog dialog01;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -37,6 +37,11 @@ public class MenuItemFragment extends Fragment {
 
         dialog01 = new Dialog(requireActivity());
         dialog01.setContentView(R.layout.qr_dialog);
+        dLayoutInflater = dialog01.getLayoutInflater();
+        View view = dLayoutInflater.inflate(R.layout.qr_dialog,null);
+        ImageView image_qr = view.findViewById(R.id.image_qr);
+        TextView timer = view.findViewById(R.id.tv_timer);
+        TextView guide = view.findViewById(R.id.guide);
 
         RecyclerView recyclerView = binding.recyclerviewTransform;
         MenuRecyclerViewAdapter adapter = new MenuRecyclerViewAdapter(setItem());
@@ -54,7 +59,6 @@ public class MenuItemFragment extends Fragment {
 
         menuItemViewModel.getICart().observe(requireActivity(),items ->{
             CartRecyclerViewAdapter cartRecyclerViewAdapter = (new CartRecyclerViewAdapter(items));
-            //cart.setAdapter(new CartRecyclerViewAdapter(items));
             cart.setAdapter(cartRecyclerViewAdapter);
 
             Log.e("getChildCount", String.valueOf(cartRecyclerViewAdapter.getItemCount()));
@@ -68,32 +72,44 @@ public class MenuItemFragment extends Fragment {
 
         menuItemViewModel.getQrData().observe(requireActivity(),qr ->{
 
-            LayoutInflater layoutInflater = dialog01.getLayoutInflater();
+            guide.setText("1. 결제 할 간편결제 App을 실행해 주세요" +'\n'+'\n'+"2. QR결제를 선택하고 아래 QR을 읽어 주세요");
+            image_qr.setImageBitmap(qr);
+/*            LayoutInflater layoutInflater = dialog01.getLayoutInflater();
             View view = layoutInflater.inflate(R.layout.qr_dialog,null);
             ImageView imageView1 = view.findViewById(R.id.image_qr);
             imageView1.setImageBitmap(qr);
-
+            TextView textView = view.findViewById(R.id.guide);
+            textView.setText("1. 결제 할 간편결제 App을 실행해 주세요\\n\\n2. QR결제를 선택하고 아래 QR을 읽어 주세요");
+            */
             dialog01.setContentView(view);
             dialog01.show();
         });
 
         menuItemViewModel.getUid().observe(requireActivity(),re -> {
-            menuItemViewModel.getInfo();
+            //menuItemViewModel.getInfo();
+            menuItemViewModel.getItem();;
         });
 
         menuItemViewModel.getResult().observe(requireActivity(),r->{
-            Log.e("getresult","ok");
-            LayoutInflater layoutInflater = dialog01.getLayoutInflater();
-            View view = layoutInflater.inflate(R.layout.qr_dialog,null);
-            ImageView imageView1 = view.findViewById(R.id.image_qr);
-            imageView1.setImageBitmap(null);
-            imageView1.setVisibility(View.INVISIBLE);
-            TextView textView = view.findViewById(R.id.guide);
-            textView.setText("결제가 완료 되었습니다.\n이용해 주셔서 감사합니다.");
-            dialog01.setContentView(view);
-            dialog01.show();
+
+            if(dialog01.isShowing()) {
+                Log.e("getResult","Done!!");
+                guide.setText("결제가 완료 되었습니다."+'\n'+'\n'+"이용해 주셔서 감사합니다.");
+                image_qr.setImageBitmap(null);
+                dialog01.setContentView(view);
+                //dialog01.show();
+                menuItemViewModel.initCartItem();
+                binding.tvSum.setText("0 원");
+            }
 
         });
+
+        menuItemViewModel.getTimer().observe(requireActivity(),t->{
+            menuItemViewModel.initCartItem();
+            binding.tvSum.setText("0 원");
+            dialog01.dismiss();
+        });
+
 
         return root;
     }
