@@ -4,24 +4,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import com.mpas.mpas_kiosk.databinding.FragmentStoreBinding;
 
-import com.mpas.mpas_kiosk.databinding.FragmentSlideshowBinding;
+public class StoreManagementFragment extends Fragment {
 
-public class SlideshowFragment extends Fragment {
-
-    private FragmentSlideshowBinding binding;
+    private FragmentStoreBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SlideshowViewModel slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        StoreViewModel slideshowViewModel =
+                new ViewModelProvider(this).get(StoreViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentStoreBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         return root;

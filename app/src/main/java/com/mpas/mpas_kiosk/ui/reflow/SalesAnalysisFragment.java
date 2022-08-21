@@ -4,24 +4,24 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.mpas.mpas_kiosk.databinding.FragmentReflowBinding;
+import com.mpas.mpas_kiosk.databinding.FragmentSalesBinding;
 
-public class ReflowFragment extends Fragment {
 
-    private FragmentReflowBinding binding;
+public class SalesAnalysisFragment extends Fragment {
+
+    private FragmentSalesBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ReflowViewModel reflowViewModel =
-                new ViewModelProvider(this).get(ReflowViewModel.class);
+        SalesAnalysisViewModel reflowViewModel =
+                new ViewModelProvider(this).get(SalesAnalysisViewModel.class);
 
-        binding = FragmentReflowBinding.inflate(inflater, container, false);
+        binding = FragmentSalesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         return root;

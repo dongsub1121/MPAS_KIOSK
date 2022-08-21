@@ -128,7 +128,7 @@ public class MenuItemFragment extends Fragment {
         items.add( new CartChild(R.drawable.menu_2,"콜드 브루 플로트",6000));
         items.add( new CartChild(R.drawable.menu_3,"돌체 콜드브루",5300));
         items.add( new CartChild(R.drawable.menu_4,"바닐라 크림 콜드브루",5000));
-        items.add( new CartChild(R.drawable.menu_5,"부드러운 생크림 카스텔라",9000));
+        items.add( new CartChild(R.drawable.menu_5,"마스카포네 티라미수",9000));
         items.add( new CartChild(R.drawable.menu_6,"베리 수플레 치즈 케이크",13000));
         items.add( new CartChild(R.drawable.menu_7,"리치 가나슈 케이크",15000));
         items.add( new CartChild(R.drawable.menu_8,"초콜릿 생크림 케이크",13000));
