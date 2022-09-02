@@ -14,8 +14,10 @@
         <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/app_bar_main.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/content_main.xml" value="0.32653985507246375" />
         <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/fragment_reflow.xml" value="0.32653985507246375" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/fragment_sales.xml" value="0.196875" />
         <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/fragment_settings.xml" value="0.32653985507246375" />
         <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/fragment_slideshow.xml" value="0.32653985507246375" />
+        <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/fragment_store.xml" value="0.196875" />
         <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/fragment_transform.xml" value="0.15" />
         <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/item_transform.xml" value="0.19635416666666666" />
         <entry key="..\:/AndroidStudioProjects/MPAS_KIOSK/app/src/main/res/layout/menu_cart.xml" value="0.19635416666666666" />

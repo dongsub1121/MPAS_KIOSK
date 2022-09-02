@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -55,6 +56,11 @@ public class MenuItemViewModel extends AndroidViewModel {
     public MutableLiveData<String> uid = new MutableLiveData<>();
     public MutableLiveData<Boolean> paymentsDone = new MutableLiveData<>();
     public MutableLiveData<Integer> dialogTimer = new MutableLiveData<>();
+    public MutableLiveData<String> ErrorMessage = new MutableLiveData<>();
+
+    public MutableLiveData<String> getErrorMessage() {
+        return ErrorMessage;
+    }
 
     public MutableLiveData<Integer> getTimer() {
         return dialogTimer;
@@ -147,21 +153,28 @@ public class MenuItemViewModel extends AndroidViewModel {
                         RetroItem item = gson.fromJson(js, RetroItem.class);
                         Log.e("onSuccess", item.cbf);
 
-                        Bitmap qrBitmap = null;
-                        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+                        try{
+                            Bitmap qrBitmap = null;
+                            MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
 
-                        try {
-                            BitMatrix qr_bitMatrix = multiFormatWriter.encode(Objects.requireNonNull(item.cbf), BarcodeFormat.QR_CODE, 500, 500);
-                            BarcodeEncoder qr_barcodeEncoder = new BarcodeEncoder();
-                            qrBitmap = qr_barcodeEncoder.createBitmap(qr_bitMatrix);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            try {
+                                BitMatrix qr_bitMatrix = multiFormatWriter.encode(Objects.requireNonNull(item.cbf), BarcodeFormat.QR_CODE, 500, 500);
+                                BarcodeEncoder qr_barcodeEncoder = new BarcodeEncoder();
+                                qrBitmap = qr_barcodeEncoder.createBitmap(qr_bitMatrix);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            qrData.postValue(qrBitmap);
+                            uid.setValue(item.uid);
+                            Log.e("uid", getUid().toString());
+                            repo.setUid(item.uid);
+                        }catch (NullPointerException e){
+                            ErrorMessage.postValue(item.rec+":::::"+item.rem);
+
                         }
 
-                        qrData.postValue(qrBitmap);
-                        uid.setValue(item.uid);
-                        Log.e("uid", getUid().toString());
-                        repo.setUid(item.uid);
+
                     }
 
                     @Override

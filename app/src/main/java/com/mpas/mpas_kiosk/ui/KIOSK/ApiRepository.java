@@ -14,9 +14,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiRepository {
     private  static final java.lang.String BASE_URL = "http://61.33.183.227:3000/";
-    private static final java.lang.String _uid = "MzQ4NTUwOTk5EUGB";
+    private static final java.lang.String _uid = "DMN-MDcxODEyMzEwADU1";
     private static java.lang.String uid = "";
-    private static final java.lang.String _nid = "jtnet;1078155843;1814119990";
+    private static final java.lang.String _nid = "jtnet;8158100527;1814119990";
     private static final java.lang.String cid = "M101";
     private static java.lang.String pnm = "김밥 외";
     private static java.lang.String ptz = "1004";

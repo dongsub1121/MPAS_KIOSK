@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -110,7 +111,9 @@ public class MenuItemFragment extends Fragment {
             dialog01.dismiss();
         });
 
-
+        menuItemViewModel.getErrorMessage().observe(requireActivity(),msg->{
+            Toast.makeText(requireActivity(), "msg", Toast.LENGTH_SHORT).show();
+        });
         return root;
     }
 
